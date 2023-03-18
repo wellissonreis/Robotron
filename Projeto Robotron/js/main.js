@@ -1,5 +1,6 @@
 const controle = document.querySelectorAll('[data-botao]');
 const estatistica = document.querySelectorAll('[data-estatistica]');
+const contadorCor = document.querySelectorAll('[data-contador]');
 const pecas = {
     "bracos": {
         "forca": 29,
@@ -39,6 +40,7 @@ controle.forEach((elemento)=>{
     elemento.addEventListener("click", (evento)=>{
         acao(evento.target.dataset.botao, evento.target.parentNode);
         atualizaEstatistica(evento.target.dataset.peca, elemento.dataset.botao);
+        alteraCor()
     })
 })
 
@@ -47,9 +49,11 @@ function acao(operacao, controleContador){
 
     if(operacao == "+"){
         contador.value = parseInt(contador.value) + 1;
-    }else{
+    }else if(operacao == "-"){
         contador.value = parseInt(contador.value) - 1;
     }
+
+    
 }
 
 
@@ -62,6 +66,26 @@ function atualizaEstatistica(peca, oper){
     }else{
         el.textContent = parseInt(el.textContent) - pecas[peca][el.dataset.estatistica]; 
     }
+
     });
+
+}
+
+function alteraCor(){
+    estatistica.forEach((e)=>{
+        if(e.textContent < 0){
+            e.style.color = "red";
+        }else{
+            e.style.color = "white"
+        }
+    })
+
+    contadorCor.forEach((c)=>{
+        if(c.value < 0){
+            c.style.color = "red";
+        }else{
+            c.style.color = "white"
+        }
+    })
 
 }
